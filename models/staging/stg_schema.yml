@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_fore
+    columns:
+      - name: forecastType 
+        tests:
+          - accepted_values:
+              values:
+                - long-term
+      
+      - name: code
+        tests:
+          - accepted_values:
+              values:
+                - vilnius
+                - kaunas
+                - klaipeda
+                - silute
+                - neringa-nida
+
+  - name: stg_obse
+    columns:
+      - name: stations
+        tests:
+          - accepted_values:
+              values:
+                - vilniaus-ams
+                - kauno-ams
+                - klaipedos-ams
+                - silutes-ams
+                - nidos-ams

@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: src-observation
+    database: meteo-372509
+    schema: temp
+    tables:
+    - name: observation
+      loaded_at_field: date
+      freshness:
+        warn_after: {count: 1, period: hour}
+        error_after: {count: 5, period: hour}
