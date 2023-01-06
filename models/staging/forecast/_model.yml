@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: stg_fore
+  - name: stg_forecast
     columns:
       - name: forecastType 
         tests:
@@ -18,15 +18,3 @@ models:
                 - klaipeda
                 - silute
                 - neringa-nida
-
-  - name: stg_obse
-    columns:
-      - name: stations
-        tests:
-          - accepted_values:
-              values:
-                - vilniaus-ams
-                - kauno-ams
-                - klaipedos-ams
-                - silutes-ams
-                - nidos-ams

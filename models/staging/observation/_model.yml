@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_observation
+    columns:
+      - name: stations
+        tests:
+          - accepted_values:
+              values:
+                - vilniaus-ams
+                - kauno-ams
+                - klaipedos-ams
+                - silutes-ams
+                - nidos-ams
