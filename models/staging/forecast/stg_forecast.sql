@@ -5,20 +5,31 @@ forecast as (
     select * from {{ source('src-forecast', 'forecast-long') }}
 ),
 
+
+forecast_fixed_utc_time as (
+    select
+        TIMESTAMP_ADD(datetime(forecastTimeUtc), INTERVAL {{ var('utc_offset_hours') }} HOUR) as forecast_datetime,
+        TIMESTAMP_ADD(datetime(forecastCreationTimeUtc), INTERVAL {{ var('utc_offset_hours') }} HOUR) as forecast_creation_datetime,
+        code,
+        airTemperature,
+        date
+    from forecast
+),
+
+
 final as (
     select
-        datetime(forecastTimeUtc) as forecast_datetime_utc,
-        TIMESTAMP_ADD(datetime(forecastTimeUtc), INTERVAL {{ var('utc_offset_hours') }} HOUR) as forecast_datetime,
-        date(forecastTimeUtc) as forecast_date,
-        time(datetime(forecastTimeUtc)) as forecast_time,
+        forecast_datetime,
+        date(forecast_datetime) as forecast_date,
+        time(forecast_datetime) as forecast_time,
         code as place_code,
         airTemperature as air_temp,
-        datetime(forecastCreationTimeUtc) as forecast_creation_datetime_utc,
-        date(forecastCreationTimeUtc) as forecast_creation_date_utc,
-        time(datetime(forecastCreationTimeUtc)) as forecast_creation_time_utc,
+        forecast_creation_datetime,
+        date(forecast_creation_datetime) as forecast_creation_date,
+        time(forecast_creation_datetime) as forecast_creation_time,
         date as loaded_date,
-        ({{ count_days_diff('datetime(forecastCreationTimeUtc)', 'datetime(forecastTimeUtc)' ) }}) as forecast_age  
-    from forecast
+        ({{ count_days_diff('datetime(forecast_creation_datetime)', 'datetime(forecast_datetime)' ) }}) as forecast_age  
+    from forecast_fixed_utc_time
 )
 
 select * from final
