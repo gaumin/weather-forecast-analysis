@@ -22,16 +22,18 @@ observation_place_joined as (
 
 final as (
     select 
-        forecast_date,
+        forecast_datetime,
         f.place_code,
         f.air_temp as f_air_temp,
         o.air_temp as o_air_temp,
+        round(ABS(f.air_temp-o.air_temp), 1) as air_temp_delta,
         forecast_age,
-        forecast_creation_datetime_utc,
-        f.loaded_date
+        forecast_creation_datetime,
+        f.loaded_date,
+        observation_datetime
     from forecast as f
     left join observation_place_joined as o
-        on f.forecast_datetime = o.observation_datetime_utc
+        on f.forecast_datetime = o.observation_datetime
     where o.air_temp is not null
 )
 
