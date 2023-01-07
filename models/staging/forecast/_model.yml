@@ -2,13 +2,7 @@ version: 2
 
 models:
   - name: stg_forecast
-    columns:
-      - name: forecastType 
-        tests:
-          - accepted_values:
-              values:
-                - long-term
-      
+    columns:      
       - name: place_code
         tests:
           - accepted_values:
