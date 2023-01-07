@@ -9,7 +9,7 @@ models:
               values:
                 - long-term
       
-      - name: code
+      - name: place_code
         tests:
           - accepted_values:
               values:
