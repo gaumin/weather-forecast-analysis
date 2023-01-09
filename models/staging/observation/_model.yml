@@ -3,7 +3,7 @@ version: 2
 models:
   - name: stg_observation
     columns:
-      - name: station_code
+      - name: ob_station_code
         tests:
           - accepted_values:
               values:

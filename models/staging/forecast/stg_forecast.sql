@@ -12,6 +12,12 @@ forecast_fixed_utc_time as (
         TIMESTAMP_ADD(datetime(forecastCreationTimeUtc), INTERVAL {{ var('utc_offset_hours') }} HOUR) as forecast_creation_datetime,
         code,
         airTemperature,
+        windSpeed,
+        windDirection,
+        cloudCover,
+        seaLevelPressure,
+        relativeHumidity,
+        totalPrecipitation,
         date
     from forecast
 ),
@@ -19,16 +25,22 @@ forecast_fixed_utc_time as (
 
 final as (
     select
-        forecast_datetime,
-        date(forecast_datetime) as forecast_date,
-        time(forecast_datetime) as forecast_time,
-        code as place_code,
-        airTemperature as air_temp,
-        forecast_creation_datetime,
-        date(forecast_creation_datetime) as forecast_creation_date,
-        time(forecast_creation_datetime) as forecast_creation_time,
-        date as loaded_date,
-        ({{ count_days_diff('datetime(forecast_creation_datetime)', 'datetime(forecast_datetime)' ) }}) as forecast_age  
+        forecast_datetime as fo_datetime,
+        date(forecast_datetime) as fo_date,
+        time(forecast_datetime) as fo_time,
+        code as fo_place_code,
+        airTemperature as fo_air_temp,
+        windSpeed as fo_wind_speed,
+        windDirection as fo_wind_dir,
+        cloudCover as fo_cloud,
+        seaLevelPressure as fo_pressure,
+        relativeHumidity as fo_humidity,
+        totalPrecipitation as fo_precipit,
+        forecast_creation_datetime as fo_creation_datetime,
+        date(forecast_creation_datetime) as fo_creation_date,
+        time(forecast_creation_datetime) as fo_creation_time,
+        date as fo_loaded_date,
+        ({{ count_days_diff('datetime(forecast_creation_datetime)', 'datetime(forecast_datetime)' ) }}) as fo_age  
     from forecast_fixed_utc_time
 )
 
