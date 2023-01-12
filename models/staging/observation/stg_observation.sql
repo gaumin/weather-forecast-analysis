@@ -2,7 +2,7 @@ with
 
 -- import
 observations as (
-    select * from {{ source('src-observation', 'observation') }} 
+    select * from {{ source('src-observation', 'observation_data') }} 
 ),
 
 places as (

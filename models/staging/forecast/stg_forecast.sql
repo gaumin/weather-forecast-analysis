@@ -2,7 +2,7 @@
 with 
 
 forecast as (
-    select * from {{ source('src-forecast', 'forecast-long') }}
+    select * from {{ source('src-forecast', 'forecast_data') }}
 ),
 
 
