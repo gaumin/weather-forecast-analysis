@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: src-forecast
+    database: meteo-372509
+    schema: PROD
+    tables:
+    - name: forecast_data
+      loaded_at_field: date
+      freshness:
+        warn_after: {count: 3, period: hour}
+        error_after: {count: 5, period: hour}
