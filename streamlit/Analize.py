@@ -75,10 +75,13 @@ else:
 
 
 # fig.update(layout_yaxis_range = [0,agg_df['air_temp_dev'].max()+2])
+config={'scrollZoom': True,
+        'displaylogo': False,
+        'modeBarButtonsToRemove': ['lasso2d', 'select2d']}
+
 fig.update(layout_xaxis_range = [-0.2,7.2])
 
-
-st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+st.plotly_chart(fig, theme="streamlit", use_container_width=True, config=config)
 
 
 show_data = st.checkbox('Rodyti duomenis')

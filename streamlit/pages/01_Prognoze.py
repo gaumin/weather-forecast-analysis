@@ -62,9 +62,16 @@ agg_df = agg_df[agg_df['fo_place_code'] == place].sort_values(by=['fo_datetime']
 
 fig = px.line(agg_df, x='fo_datetime', y=metrics[metric_choice], labels=labels, title=metric_choice, markers=True)
 
+fig.update({'layout': {'xaxis': {'fixedrange':True}, 'yaxis': {'fixedrange':True}}} )
 #fig.update(layout_yaxis_range = [0,agg_df['air_temp_dev'].max()+2])
 #fig.update(layout_xaxis_range = [-0.2,7.5])
-st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+ 
+config={'scrollZoom': True,
+        'displaylogo': False,
+        'modeBarButtonsToRemove': ['lasso2d', 'select2d']}
+
+
+st.plotly_chart(fig, theme="streamlit", use_container_width=True, config=config)
 
 fo_creation_date = forecast['fo_creation_date'].max()
 fo_creation_time = forecast['fo_creation_time'].max()
