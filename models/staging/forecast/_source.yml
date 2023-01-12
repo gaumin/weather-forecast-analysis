@@ -3,9 +3,9 @@ version: 2
 sources:
   - name: src-forecast
     database: meteo-372509
-    schema: temp
+    schema: PROD
     tables:
-    - name: forecast-long
+    - name: forecast_data
       loaded_at_field: date
       freshness:
         warn_after: {count: 1, period: hour}

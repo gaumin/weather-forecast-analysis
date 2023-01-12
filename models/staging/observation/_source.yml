@@ -3,9 +3,9 @@ version: 2
 sources:
   - name: src-observation
     database: meteo-372509
-    schema: temp
+    schema: PROD
     tables:
-    - name: observation
+    - name: observation_data
       loaded_at_field: date
       freshness:
         warn_after: {count: 1, period: hour}
