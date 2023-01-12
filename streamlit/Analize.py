@@ -79,6 +79,7 @@ config={'scrollZoom': True,
         'displaylogo': False,
         'modeBarButtonsToRemove': ['lasso2d', 'select2d']}
 
+fig.update({'layout': {'xaxis': {'fixedrange':True}, 'yaxis': {'fixedrange':True}}} )
 fig.update(layout_xaxis_range = [-0.2,7.2])
 
 st.plotly_chart(fig, theme="streamlit", use_container_width=True, config=config)
