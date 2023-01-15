@@ -5,6 +5,15 @@ forecast as (
     select * from {{ source('src-forecast', 'forecast_data') }}
 ),
 
+forecast_with_duplicates_count as (
+    select 
+        *, 
+        ROW_NUMBER() 
+            OVER (PARTITION BY code, forecastCreationTimeUtc, forecastTimeUtc 
+            ORDER BY code, forecastCreationTimeUtc, forecastTimeUtc DESC) as row_no
+    FROM forecast
+),
+
 
 forecast_fixed_utc_time as (
     select
@@ -19,9 +28,9 @@ forecast_fixed_utc_time as (
         relativeHumidity,
         totalPrecipitation,
         date
-    from forecast
+    from forecast_with_duplicates_count
+    where row_no = 1   -- drop dublicates
 ),
-
 
 final as (
     select

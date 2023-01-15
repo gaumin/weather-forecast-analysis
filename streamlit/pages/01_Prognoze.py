@@ -25,7 +25,7 @@ metrics = {'Temperatūra, C':'fo_air_temp',
             'Krituliai, mm':'fo_precipit',
             'Vėjas, ms': 'fo_wind_speed',
             'Vėjo kryptis, °':'fo_wind_dir',
-            'Debesuotumas, %':'fo_cloud_dev',
+            'Debesuotumas, %':'fo_cloud',
             'Slėgis, hPa':'fo_pressure',
             'Santykinė oro drėgmė, %':'fo_humidity' }
 

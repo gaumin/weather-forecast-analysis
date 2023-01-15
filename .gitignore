@@ -7,5 +7,6 @@ logs/
 .vscode
 streamlit/.streamlit/secrets.toml
 __pycache__
+api_data_loader/log.txt
 
 

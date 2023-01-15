@@ -9,6 +9,16 @@ places as (
      select * from {{ ref('seed_places_stations')}}
 ),
 
+
+observation_with_duplicates_count as (
+    select 
+        *, 
+        ROW_NUMBER() 
+            OVER (PARTITION BY station, observationTimeUtc 
+            ORDER BY station, observationTimeUtc) as row_no
+    FROM observations
+),
+
 observation_fixed_utc_time as (
     select
         TIMESTAMP_ADD(datetime(observationTimeUtc), INTERVAL {{ var('utc_offset_hours') }} HOUR) as observation_datetime,
@@ -21,7 +31,8 @@ observation_fixed_utc_time as (
         precipitation,
         station,
         date
-    from observations
+    from observation_with_duplicates_count
+    where row_no = 1  -- drop duplicates 
 ),
 
 --transform
