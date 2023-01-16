@@ -3,8 +3,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 from google.oauth2 import service_account
-from datetime import datetime, timedelta
-from datetime import date
+from datetime import date, datetime, timedelta
 
 st.title = "Prognozė :barely_sunny:"
 
@@ -48,8 +47,6 @@ st.write("Prognozės laikotarpis", period, 'dienos')
 
 limit_date = date.today() + timedelta(days=period+1) 
 
-st.write("Limit date ", limit_date)
-
 with col1:
     place = st.selectbox( 'Pasirinkite vietovę: ', dict.keys())
 
@@ -63,23 +60,19 @@ agg_df = agg_df[agg_df['fo_place_code'] == place].sort_values(by=['fo_datetime']
 fig = px.line(agg_df, x='fo_datetime', y=metrics[metric_choice], labels=labels, title=metric_choice, markers=True)
 
 fig.update({'layout': {'xaxis': {'fixedrange':True}, 'yaxis': {'fixedrange':True}}} )
-#fig.update(layout_yaxis_range = [0,agg_df['air_temp_dev'].max()+2])
-#fig.update(layout_xaxis_range = [-0.2,7.5])
  
 config={'scrollZoom': True,
         'displaylogo': False,
         'modeBarButtonsToRemove': ['lasso2d', 'select2d']}
 
-
 st.plotly_chart(fig, theme="streamlit", use_container_width=True, config=config)
 
 fo_creation_date = forecast['fo_creation_date'].max()
 fo_creation_time = forecast['fo_creation_time'].max()
-fo_loaded_date = forecast['fo_loaded_date'].max()
+fo_loaded_date = forecast['fo_loaded_date'].max().replace(microsecond=0)
 
-st.write("Prognozės sudarymo data (meteo.lt): ", fo_creation_date, ' ', fo_creation_time )
-st.write("Prognozės duomenų nuskaitymo data: ", fo_loaded_date)
-
+st.write("Prognozės sudarymo laikas (meteo.lt): ", fo_creation_date, ' ', fo_creation_time )
+st.write("Prognozės duomenų nuskaitymo laikas: ", fo_loaded_date.date(), fo_loaded_date.time())
 show_data = st.checkbox('Rodyti duomenis')
 
 if show_data:
