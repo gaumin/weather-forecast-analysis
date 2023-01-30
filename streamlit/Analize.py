@@ -84,7 +84,6 @@ fig.update(layout_xaxis_range = [-0.2,7.2])
 
 st.plotly_chart(fig, theme="streamlit", use_container_width=True, config=config)
 
-
 show_data = st.checkbox('Rodyti duomenis')
 
 if show_data:
